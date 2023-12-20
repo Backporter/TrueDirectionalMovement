@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ORBIS">
+      <Configuration>Debug</Configuration>
+      <Platform>ORBIS</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ORBIS">
+      <Configuration>Release</Configuration>
+      <Platform>ORBIS</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CSEL\CSEL.vcxproj">
+      <Project>{d002b244-428f-4c72-92b3-0024761376c8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OrbisUtil\xUtilty.vcxproj">
+      <Project>{72c2aa1e-9ed3-48ea-99fa-dc9241308175}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\DirectionalMovementHandler.h" />
+    <ClInclude Include="src\Events.h" />
+    <ClInclude Include="src\Hooks.h" />
+    <ClInclude Include="src\ModAPI.h" />
+    <ClInclude Include="src\Offsets.h" />
+    <ClInclude Include="src\Papyrus.h" />
+    <ClInclude Include="src\PCH.h" />
+    <ClInclude Include="src\Raycast.h" />
+    <ClInclude Include="src\Settings.h" />
+    <ClInclude Include="src\SmoothCamAPI.h" />
+    <ClInclude Include="src\TrueDirectionalMovementAPI.h" />
+    <ClInclude Include="src\TrueHUDAPI.h" />
+    <ClInclude Include="src\Utils.h" />
+    <ClInclude Include="src\Widgets\TargetLockReticle.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\PCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\DirectionalMovementHandler.cpp" />
+    <ClCompile Include="src\Events.cpp" />
+    <ClCompile Include="src\Hooks.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ModAPI.cpp" />
+    <ClCompile Include="src\Papyrus.cpp" />
+    <ClCompile Include="src\Raycast.cpp" />
+    <ClCompile Include="src\Settings.cpp" />
+    <ClCompile Include="src\Utils.cpp" />
+    <ClCompile Include="src\Widgets\TargetLockReticle.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7C28B5D8-0DD7-475A-A4D2-D3959BE2EA69}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LIB|Win32'" Label="Configuration">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Condition="'$(DebuggerFlavor)'=='ORBISDebugger'" Label="OverrideDebuggerDefaults">
+    <!--LocalDebuggerCommand>$(TargetPath)</LocalDebuggerCommand-->
+    <!--LocalDebuggerCommandArguments></LocalDebuggerCommandArguments-->
+    <!--LocalDebuggerTarget></LocalDebuggerTarget-->
+    <!--LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory-->
+    <!--LocalRunCommandLine></LocalRunCommandLine-->
+  </PropertyGroup>
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\OrbisWavePsslc.props" />
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\SCU.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">
+    <OutDir>$(ProjectDir)..\..\ConvertPRX2SELF\CUSA30258-app</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;SMOOTHCAM_API_COMMONLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CppExceptions>true</CppExceptions>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <CppLanguageStd>Cpp14</CppLanguageStd>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>-ferror-limit=256 %(AdditionalOptions)</AdditionalOptions>
+      <ForcedIncludeFiles>PCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(SolutionDir)Plugins\$(ProjectName)\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>unknown-pragmas;unused-private-field;c++1z-extensions;dll-attribute-on-redeclaration;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <CLanguageStd>Gnu11</CLanguageStd>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;SMOOTHCAM_API_COMMONLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <OptimizationLevel>Level2</OptimizationLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(SolutionDir)Plugins\$(ProjectName)\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CppExceptions>true</CppExceptions>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <CppLanguageStd>Cpp14</CppLanguageStd>
+      <CLanguageStd>Gnu11</CLanguageStd>
+      <ForcedIncludeFiles>PCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <AdditionalOptions>-ferror-limit=1024 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>unknown-pragmas;unused-private-field;c++1z-extensions;dll-attribute-on-redeclaration;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>-lc_stub_weak;-lkernel_stub_weak;-lScePad_stub_weak;-lSceVideoOut_stub_weak;-lSceSystemService_stub_weak;-lScePosix_stub_weak;-lSceNet_stub_weak;-lSceNetCtl_stub_weak;-lSceNetDebug_stub_weak;-lSceHttp_stub_weak;-lSceSaveData_stub_weak;-lSceUserService_stub_weak;-lSceSystemService_stub;-lSceRtc_stub_weak;-lSceNpTrophy_stub_weak;-lSceSysmodule_stub_weak;-lSceAppContent_stub_weak;-lSceAudioOut_stub_weak;-lSceFios2_stub_weak;-lSceMsgDialog_stub_weak;-lSceCommonDialog_stub_weak;-lSceImeDialog_stub_weak;-lSceErrorDialog_stub_weak;-lSceNpManager_stub_weak;-lSceGnmDriver_stub_weak;-lSceGnm;-lSceGnmx;-lSceGpuAddress;-lSceRazorCpu_stub_weak;-lSceNpAuth_stub_weak;-lSceCoredump_stub_weak;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>"C:\Users\kernel\Desktop\OrbisLibBGS\ConvertPRX2SELF\build_extract_plugin.bat" $(ProjectName)
+"C:\Windows\explorer.exe" "C:\Users\kernel\Desktop\OrbisLibBGS\ConvertPRX2SELF\CUSA30258-app"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Condition="'$(ConfigurationType)' == 'Makefile' and Exists('$(VCTargetsPath)\Platforms\$(Platform)\SCE.Makefile.$(Platform).targets')" Project="$(VCTargetsPath)\Platforms\$(Platform)\SCE.Makefile.$(Platform).targets" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\OrbisWavePsslc.targets" />
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\SCU.targets" />
+  </ImportGroup>
+</Project>
