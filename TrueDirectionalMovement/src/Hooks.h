@@ -429,7 +429,7 @@ namespace Hooks
 			// REL::Relocation<uintptr_t> hook{ RELOCATION_ID(32141, 32885) }; // 4F06E0, 5096B0
 
 			_SetBool = trampoline.write_call<5>(hook1.address() + 0x58 /*0x4C*/, SetBool);
-			_SetInt = trampoline.write_call<5>(hook2.address() + 0x58  /*0x4B*/, SetInt);
+			_SetInt = trampoline.write_call<5>(hook2.address() + 0x57  /*0x4B*/, SetInt);
 			// _SetBool = trampoline.write_call<5>(hook.address() + 0xE, SetBool);
 		}
 
