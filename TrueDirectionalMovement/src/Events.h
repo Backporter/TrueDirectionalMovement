@@ -18,8 +18,8 @@ namespace Events
 			kInvalid = static_cast<uint32_t>(-1),
 			
 			kKeyboardOffset = 0,
-			kMouseOffset	= 256,
-			kGamepadOffset	= 266
+			kMouseOffset	= 0,
+			kGamepadOffset	= 0,
 		};
 
 		InputEventHandler() = default;

@@ -2875,7 +2875,8 @@ void DirectionalMovementHandler::InitCameraModsCompatibility()
 
 	// From SmoothCam - Improved Camera compatibility
 	auto hMod = GetModuleHandle("ImprovedCamera.dll");
-	if (hMod) {
+	if (hMod) 
+	{
 		MODULEINFO mi;
 		GetModuleInformation(GetCurrentProcess(), hMod, &mi, sizeof(mi));
 		if (mi.SizeOfImage != ICSignatures::SizeOfImage)
@@ -2884,32 +2885,33 @@ void DirectionalMovementHandler::InitCameraModsCompatibility()
 		}
 
 		const auto ntHeader = ImageNtHeader(hMod);
-		if (ntHeader->Signature != ICSignatures::Signature || 
-			ntHeader->OptionalHeader.AddressOfEntryPoint != ICSignatures::AddressOfEntryPoint || 
-			ntHeader->FileHeader.TimeDateStamp != ICSignatures::TimeDateStamp)
+		if (ntHeader->Signature != ICSignatures::Signature ||  ntHeader->OptionalHeader.AddressOfEntryPoint != ICSignatures::AddressOfEntryPoint || ntHeader->FileHeader.TimeDateStamp != ICSignatures::TimeDateStamp)
 		{
 			return;
 		}
 
 		DWORD dwHandle;
 		auto sz = GetFileVersionInfoSize("ImprovedCamera.dll", &dwHandle);
-		if (sz != 0) {
+		if (sz != 0) 
+		{
 			LPSTR verData = (LPSTR)malloc(sizeof(char) * sz);
 
-			if (GetFileVersionInfo("ImprovedCamera.dll", dwHandle, sz, verData)) {
+			if (GetFileVersionInfo("ImprovedCamera.dll", dwHandle, sz, verData)) 
+			{
 				LPBYTE lpBuffer = NULL;
 				UINT size = 0;
-				if (VerQueryValue(verData, "\\", reinterpret_cast<void**>(&lpBuffer), &size) && size) {
+				if (VerQueryValue(verData, "\\", reinterpret_cast<void**>(&lpBuffer), &size) && size) 
+				{
 					VS_FIXEDFILEINFO* verInfo = reinterpret_cast<VS_FIXEDFILEINFO*>(lpBuffer);
-					if (verInfo->dwSignature == 0xfeef04bd) {
+					if (verInfo->dwSignature == 0xfeef04bd) 
+					{
 						auto v0 = (verInfo->dwFileVersionMS >> 16) & 0xffff;
 						auto v1 = (verInfo->dwFileVersionMS >> 0) & 0xffff;
 						auto v2 = (verInfo->dwFileVersionLS >> 16) & 0xffff;
 						auto v3 = (verInfo->dwFileVersionLS >> 0) & 0xffff;
 
 						// Now check for our match
-						if (v0 == ICSignatures::FileVersion[0] && v1 == ICSignatures::FileVersion[1] &&
-							v2 == ICSignatures::FileVersion[2] && v3 == ICSignatures::FileVersion[3])
+						if (v0 == ICSignatures::FileVersion[0] && v1 == ICSignatures::FileVersion[1] && v2 == ICSignatures::FileVersion[2] && v3 == ICSignatures::FileVersion[3])
 						{
 							_ImprovedCamera_IsFirstPerson = reinterpret_cast<bool*>(reinterpret_cast<uintptr_t>(hMod) + 0x4d510);
 						}		
@@ -2976,13 +2978,13 @@ void DirectionalMovementHandler::RegisterSmoothCamCallback()
 			[](void* interfaceInstance, SmoothCamAPI::InterfaceVersion interfaceVersion) {
 				if (interfaceVersion == SmoothCamAPI::InterfaceVersion::V3) {
 					DirectionalMovementHandler::GetSingleton()->g_SmoothCam = reinterpret_cast<SmoothCamAPI::IVSmoothCam3*>(interfaceInstance);
-					// logger::info("Obtained SmoothCamAPI");
+					xUtilty::Log::GetSingleton(0)->Write(xUtilty::Log::logLevel::kNone, "Obtained SmoothCamAPI");
 					bRegisteredSmoothCamCallback = true;
 				} else {
-					// logger::error("Unable to acquire requested SmoothCamAPI interface version");
+					xUtilty::Log::GetSingleton(0)->Write(xUtilty::Log::logLevel::kNone, "Unable to acquire requested SmoothCamAPI interface version");
 				}
 			})) {
-		// logger::warn("SmoothCamAPI::RegisterInterfaceLoaderCallback reported an error");
+		xUtilty::Log::GetSingleton(0)->Write(xUtilty::Log::logLevel::kNone, "SmoothCamAPI::RegisterInterfaceLoaderCallback reported an error");
 	}
 }
 
@@ -2996,16 +2998,16 @@ void DirectionalMovementHandler::RequestAPIs()
 		if (!SmoothCamAPI::RequestInterface(
 			API::GetMessagingInterface(),
 			SmoothCamAPI::InterfaceVersion::V3)) {
-			// logger::warn("SmoothCamAPI::RequestInterface reported an error");
+			xUtilty::Log::GetSingleton(0)->Write(xUtilty::Log::logLevel::kNone, "SmoothCamAPI::RequestInterface reported an error");
 		}
 	}
 
 	if (!g_trueHUD) {
 		DirectionalMovementHandler::GetSingleton()->g_trueHUD = reinterpret_cast<TRUEHUD_API::IVTrueHUD3*>(TRUEHUD_API::RequestPluginAPI(TRUEHUD_API::InterfaceVersion::V3));
 		if (DirectionalMovementHandler::GetSingleton()->g_trueHUD) {
-			// logger::info("Obtained TrueHUD API - {0:x}", (uintptr_t)DirectionalMovementHandler::GetSingleton()->g_trueHUD);
+			xUtilty::Log::GetSingleton(0)->Write(xUtilty::Log::logLevel::kNone, "Obtained TrueHUD API - %p", (uintptr_t)DirectionalMovementHandler::GetSingleton()->g_trueHUD);
 		} else {
-			// logger::warn("Failed to obtain TrueHUD API");
+			xUtilty::Log::GetSingleton(0)->Write(xUtilty::Log::logLevel::kNone, "Failed to obtain TrueHUD API");
 		}
 	}	
 }

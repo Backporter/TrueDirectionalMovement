@@ -12,7 +12,7 @@ namespace Papyrus
 
 	bool TrueDirectionalMovement_MCM::Register(ConsoleRE::BSScript::IVirtualMachine* a_vm)
 	{
-		a_vm->BindNativeMethod(new ConsoleRE::BSScript::NativeFunction<false, decltype(OnConfigClose), ConsoleRE::TESQuest, void>("OnConfigClose", "TrueDirectionalMovement_MCM", OnConfigClose));
+		a_vm->BindNativeMethod(new ConsoleRE::BSScript::NativeFunction<false ,decltype(OnConfigClose), ConsoleRE::TESQuest, void>("OnConfigClose", "TrueDirectionalMovement_MCM", OnConfigClose));
 
 		xUtilty::Log::GetSingleton(0)->Write(xUtilty::Log::logLevel::kNone, "Registered TrueDirectionalMovement_MCM class");
 		return true;
@@ -70,7 +70,7 @@ namespace Papyrus
 
     void Register()
 	{
-		auto papyrus = API::GetPapyrusInterface();
+		auto papyrus = const_cast<Interface::PapyrusInterface*>(API::GetPapyrusInterface());
 		papyrus->RegisterPapyrusFunctions(TrueDirectionalMovement_MCM::Register);
 		papyrus->RegisterPapyrusFunctions(TrueDirectionalMovement::Register);
 
